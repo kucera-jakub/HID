@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1 (Python 3.12.6 on win32)" generated="2024-10-04T22:08:54.977624" rpa="false" schemaversion="5">
+<suite id="s1" name="Hash Test" source="D:\git-repos\HID\hash_test.robot">
+<test id="s1-t1" name="Call Hash Function on DLL Directory" line="66">
+<kw name="Load Hash Library" owner="wrapper">
+<msg time="2024-10-04T22:08:55.047321" level="INFO">Libray loaded successfully.</msg>
+<msg time="2024-10-04T22:08:55.047321" level="INFO">${lib} = &lt;CDLL 'D:\git-repos\HID\bin\windows\hash.dll', handle 67eb0000 at 0x4dce8b8&gt;</msg>
+<var>${lib}</var>
+<arg>${DLL_PATH}</arg>
+<status status="PASS" start="2024-10-04T22:08:55.047321" elapsed="0.000000"/>
+</kw>
+<kw name="Hash Init" owner="wrapper">
+<msg time="2024-10-04T22:08:55.047321" level="INFO">HashInit Return code: HASH_ERROR_OK.</msg>
+<msg time="2024-10-04T22:08:55.047321" level="INFO">${errorCode} = 0</msg>
+<var>${errorCode}</var>
+<arg>${lib}</arg>
+<status status="PASS" start="2024-10-04T22:08:55.047321" elapsed="0.000000"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n***Library loaded and initialized... Starting the hashing fucntion on directory: ${HASH_DIRECTORY_PATH_DLL}***</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-10-04T22:08:55.047321" elapsed="0.000000"/>
+</kw>
+<kw name="Hash Directory" owner="wrapper">
+<msg time="2024-10-04T22:08:55.047321" level="INFO">HashDirectory Return code: HASH_ERROR_OK, Operation ID: 1.</msg>
+<msg time="2024-10-04T22:08:55.047321" level="INFO">${errorCode} = 0</msg>
+<msg time="2024-10-04T22:08:55.047321" level="INFO">${opID} = 1</msg>
+<var>${errorCode}</var>
+<var>${opID}</var>
+<arg>${lib}</arg>
+<arg>${HASH_DIRECTORY_PATH_DLL}</arg>
+<status status="PASS" start="2024-10-04T22:08:55.047321" elapsed="0.015629"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-10-04T22:08:55.062950" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${errorCode}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-10-04T22:08:55.062950" elapsed="0.000000"/>
+</kw>
+<kw name="Wait For Hash To Finish" owner="wrapper">
+<msg time="2024-10-04T22:09:02.576568" level="INFO">***Error Code: 0
+***Status: False
+Hashing finished!</msg>
+<msg time="2024-10-04T22:09:02.576568" level="INFO">${errorCode} = 0</msg>
+<msg time="2024-10-04T22:09:02.576568" level="INFO">${status} = False</msg>
+<var>${errorCode}</var>
+<var>${status}</var>
+<arg>${lib}</arg>
+<arg>${opID}</arg>
+<status status="PASS" start="2024-10-04T22:08:55.062950" elapsed="7.513618"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${status}</arg>
+<arg>${False}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2024-10-04T22:09:02.576568" elapsed="0.000000"/>
+</kw>
+<kw name="Read Hash Log" owner="wrapper">
+<msg time="2024-10-04T22:09:02.576568" level="INFO">${dllHashes} = ['91EDF2B18B04E2490F8521E2A1ACA', 'EF3A5C321743DB7CF1A7CEDE6EED4538', 'A088212E24F4A8B11D7AE592635E7', '7C87BB47CF38B78EE0BD81F6B2563CAF', 'CC175B9C0F1B6A831C399E269772661', '92EB5FFEE6AE2FEC3AD71C777...</msg>
+<var>${dllHashes}</var>
+<arg>${lib}</arg>
+<status status="PASS" start="2024-10-04T22:09:02.576568" elapsed="0.000000"/>
+</kw>
+<kw name="Md 5 Files In Directory" owner="wrapper">
+<msg time="2024-10-04T22:09:02.576568" level="INFO">${realHashes} = ['91edf2b108b004e20490f8521e2a1aca', 'ef3a5c321743db7cf1a7cede6eed4538', '0a0088212e24f4a8b101d7ae592635e7', '7c87bb47cf38b78ee0bd81f6b2563caf', '0cc175b9c0f1b6a831c399e269772661', '92eb5ffee6ae2fec3a...</msg>
+<var>${realHashes}</var>
+<arg>${HASH_DIRECTORY_PATH_DLL}</arg>
+<status status="PASS" start="2024-10-04T22:09:02.576568" elapsed="0.000000"/>
+</kw>
+<kw name="Is Hash Present" owner="wrapper">
+<msg time="2024-10-04T22:09:02.576568" level="INFO">****DLL ['91edf2b18b04e2490f8521e2a1aca', 'ef3a5c321743db7cf1a7cede6eed4538', 'a088212e24f4a8b11d7ae592635e7', '7c87bb47cf38b78ee0bd81f6b2563caf', 'cc175b9c0f1b6a831c399e269772661', '92eb5ffee6ae2fec3ad71c777531578f', '4a8a8f09d37b73795649038408b5f33', '8277e091d75195b448797616e091ad', 'e1671797c52e15f76338b45e841ec32', 'beddac974b546ee17361db243268f45']
+****REAL ['91edf2b108b004e20490f8521e2a1aca', 'ef3a5c321743db7cf1a7cede6eed4538', '0a0088212e24f4a8b101d7ae592635e7', '7c87bb47cf38b78ee0bd81f6b2563caf', '0cc175b9c0f1b6a831c399e269772661', '92eb5ffee6ae2fec3ad71c777531578f', '4a8a08f09d37b73795649038408b5f33', '8277e0910d750195b448797616e091ad', 'e1671797c52e15f763380b45e841ec32', 'beddac974b546ee17361db2403268f45']
+Hash 91edf2b18b04e2490f8521e2a1aca is NOT in md5realhashes.
+Hash a088212e24f4a8b11d7ae592635e7 is NOT in md5realhashes.
+Hash cc175b9c0f1b6a831c399e269772661 is NOT in md5realhashes.
+Hash 4a8a8f09d37b73795649038408b5f33 is NOT in md5realhashes.
+Hash 8277e091d75195b448797616e091ad is NOT in md5realhashes.
+Hash e1671797c52e15f76338b45e841ec32 is NOT in md5realhashes.
+Hash beddac974b546ee17361db243268f45 is NOT in md5realhashes.</msg>
+<msg time="2024-10-04T22:09:02.576568" level="INFO">${hashCompareStatus} = False</msg>
+<var>${hashCompareStatus}</var>
+<arg>${dllHashes}</arg>
+<arg>${realHashes}</arg>
+<status status="PASS" start="2024-10-04T22:09:02.576568" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${hashCompareStatus}</arg>
+<arg>${False}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2024-10-04T22:09:02.576568" elapsed="0.000000"/>
+</kw>
+<doc>Test to verify the hashing of the DLLs directory</doc>
+<tag>hash</tag>
+<timeout value="20 seconds"/>
+<status status="PASS" start="2024-10-04T22:08:55.047321" elapsed="7.529247"/>
+</test>
+<status status="PASS" start="2024-10-04T22:08:55.008875" elapsed="7.567693"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">hash</stat>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Hash Test">Hash Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
